@@ -8,7 +8,6 @@ const progress = (value) => {
   progressBar.style.width = `${percentage}%`; // Progress bar ki width update karte hain
   progressText.innerHTML = `${value}`; // Progress text ko update karte hain
 };
-
 // Buttons, time input, quiz container, aur start screen ke HTML elements ko select karte hain
 const startBtn = document.querySelector(".start"),
   timePerQuestion = document.querySelector("#time"),
@@ -33,7 +32,6 @@ const loadingAnimation = () => {
   // 1 second ke baad interval ko clear karte hain
   setTimeout(() => clearInterval(interval), 1000);
 };
-
 // Questions ka array jisme correct aur incorrect answers aur explanation diye gaye hain
 let questions = [
   { question: "How do you declare a variable in JavaScript?", correct_answer: "var", incorrect_answers: ["let", "const"], explanation: "In JavaScript, variables can be declared using 'var', 'let', or 'const'. 'var' is the older way and has function scope, while 'let' and 'const' have block scope. The correct answer is 'var' as it was specifically asked." },
@@ -71,7 +69,6 @@ let questions = [
 const getRandomNumberOfOptions = () => {
   return Math.floor(Math.random() * 3) + 2; // Random number between 2 and 4
 };
-
 // Multiple-choice question dikhane wala function
 const showMcq = (question) => {
   const questionText = document.querySelector(".question"),
@@ -79,29 +76,23 @@ const showMcq = (question) => {
   questionNumber = document.querySelector(".number");
 
   questionText.innerHTML = question.question; // Set the question text
-
   // Combine correct and incorrect answers
   const answers = [
     ...question.incorrect_answers,
     question.correct_answer.toString(),
   ];
-
   // Current sawal ke liye random number of options get karte hain
   const numOptions = getRandomNumberOfOptions();
-
   // Agar required number se zyada options hain to extra options hata dete hain
   while (answers.length > numOptions) {
     answers.pop();
   }
-
   // Agar required number se kam options hain to placeholders ya repeats add karte hain
   while (answers.length < numOptions) {
     answers.push(answers[Math.floor(Math.random() * answers.length)]);
   }
-
   // Answers ko randomly shuffle karte hain
   answers.sort(() => Math.random() - 0.5);
-
   // Pehle ke answers clear karte hain aur naye answers display karte hain
   answersWrapper.innerHTML = "";
   answers.forEach((answer) => {
@@ -114,7 +105,6 @@ const showMcq = (question) => {
       </div>
     `;
   });
-
   // Question number ka display update karte hain
   questionNumber.innerHTML = ` Question <span class="current">${questions.indexOf(question) + 1}</span>
             <span class="total">/${questions.length}</span>`;
@@ -132,12 +122,10 @@ const showMcq = (question) => {
       }
     });
   });
-
   // Question ke liye timer start karte hain
   time = timePerQuestion.value;
   startTimer(time);
 };
-
 // Time, score, current question, aur timer ko track karne ke liye variables
 let time = 30,
   score = 0,
@@ -184,10 +172,8 @@ const startQuiz = () => {
     showQuestion(questions[0]); // Display the first question
   }, 1000);
 };
-
 // Start button par event listener add karte hain
 startBtn.addEventListener("click", startQuiz);
-
 // Question display karne wala function
 const showQuestion = (question) => {
   const questionText = document.querySelector(".question"),
@@ -238,13 +224,11 @@ const showQuestion = (question) => {
   time = timePerQuestion.value;
   startTimer(time);
 };
-
 // Audio file play karne wala function
 const playAdudio = (src) => {
   const audio = new Audio(src);
   audio.play();
 };
-
 // Question ke liye timer start karne wala function
 const startTimer = (time) => {
   timer = setInterval(() => {
@@ -260,7 +244,6 @@ const startTimer = (time) => {
     }
   }, 1000); // Har second update karte hain
 };
-
 // Popup dikhane wala function jab answer ghalat ho
 const showExplanationPopup = (explanation) => {
   const popup = document.getElementById('explanationPopup');
@@ -268,7 +251,6 @@ const showExplanationPopup = (explanation) => {
   explanationText.innerHTML = explanation;
   popup.classList.remove('hide');
 };
-
 // Custom property define karne wala function (is code me use nahi hua)
 function defineProperty() {
   var nextBtn = document.createElement("div");
@@ -287,7 +269,6 @@ function defineProperty() {
 }
 
 defineProperty();
-
 // Submit button ke liye event listener add karo
 submitBtn.addEventListener("click", () => {
   const selectedAnswer = document.querySelector(".answer.selected");
@@ -300,7 +281,6 @@ submitBtn.addEventListener("click", () => {
 
   checkAnswer(); // Selected answer check karo
 });
-
 // Next button par event listener lagao
 nextBtn.addEventListener("click", () => {
   // Hide the explanation popup when moving to the next question
@@ -309,7 +289,6 @@ nextBtn.addEventListener("click", () => {
   submitBtn.style.display = "block"; // Show the submit button
   nextBtn.style.display = "none"; // Hide the next button
 });
-
 // Selected answer check karne wala function
 const checkAnswer = () => {
   clearInterval(timer); // Stop the timer
@@ -358,7 +337,6 @@ const checkAnswer = () => {
   submitBtn.style.display = "none";
   nextBtn.style.display = "block";
 };
-
 // Next question par jaane wala function
 const nextQuestion = () => {
   if (currentQuestion < questions.length) {
@@ -368,7 +346,6 @@ const nextQuestion = () => {
     showScore(); // If all questions are answered, show the final score
   }
 };
-
 // Agar saare questions answer kar liye gaye hoon to final score dikhao
 const endScreen = document.querySelector(".end-screen"),
   finalScore = document.querySelector(".final-score"),
@@ -403,7 +380,6 @@ const showScore = () => {
   emoji.innerHTML = emojiValue;
   statusText.innerHTML = status; // Remove the score percentage from here to avoid duplication
 };
-
 // Restart button par event listener lagao
 const restartBtn = document.querySelector(".restart");
 restartBtn.addEventListener("click", () => {
